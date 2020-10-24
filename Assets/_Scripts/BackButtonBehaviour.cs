@@ -5,8 +5,8 @@
 //
 // Created by Tran Minh Son on Oct 03 2020
 // StudentID: 101137552
-// Date last Modified: Oct 04 2020
-// Rev: 1.0
+// Date last Modified: Oct 24 2020
+// Rev: 1.1
 //  
 // Copyright © 2020 Tran Minh Son. All rights reserved.
 --------------------------------------------------------------*/
@@ -19,22 +19,23 @@ using UnityEngine.SceneManagement;
 
 public class BackButtonBehaviour : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // button click sound
+    public AudioSource clickSound;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     // Event handler for BackButtonPressed Event
+    // Play sound when click button and change to MainMenu scene
     public void OnBackButtonPressed()
     {
-        Debug.Log("Back Button");
-        SceneManager.LoadScene("MainMenu");
+        clickSound.Play();
+        Debug.Log("Back to MainMenu!");
+        StartCoroutine(LoadLevel("MainMenu", 0.3f));
+    }
+
+    // Waiting for _delay seconds to load new scene
+    IEnumerator LoadLevel(string _name, float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        SceneManager.LoadScene(_name);
     }
 }

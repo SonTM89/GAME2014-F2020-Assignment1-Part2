@@ -5,8 +5,8 @@
 //
 // Created by Tran Minh Son on Oct 03 2020
 // StudentID: 101137552
-// Date last Modified: Oct 04 2020
-// Rev: 1.0
+// Date last Modified: Oct 24 2020
+// Rev: 1.1
 //  
 // Copyright © 2020 Tran Minh Son. All rights reserved.
 --------------------------------------------------------------*/
@@ -19,22 +19,22 @@ using UnityEngine.SceneManagement;
 
 public class RestartButtonBehaviour : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // button click sound
+    public AudioSource clickSound;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     // Event handler for RestartButtonPressed Event
     public void OnRestartButtonPressed()
     {
-        Debug.Log("Restart");
-        SceneManager.LoadScene("GamePlay");
+        clickSound.Play();
+        Debug.Log("Restart!");
+        StartCoroutine(LoadLevel("GamePlay", 0.3f));
+    }
+
+    // Waiting for _delay seconds to load new scene
+    IEnumerator LoadLevel(string _name, float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        SceneManager.LoadScene(_name);
     }
 }

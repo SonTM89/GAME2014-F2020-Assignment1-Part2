@@ -5,8 +5,8 @@
 //
 // Created by Tran Minh Son on Oct 03 2020
 // StudentID: 101137552
-// Date last Modified: Oct 04 2020
-// Rev: 1.0
+// Date last Modified: Oct 24 2020
+// Rev: 1.1
 //  
 // Copyright © 2020 Tran Minh Son. All rights reserved.
 --------------------------------------------------------------*/
@@ -19,22 +19,23 @@ using UnityEngine.SceneManagement;
 
 public class EndButtonBehaviour : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // button click sound
+    public AudioSource clickSound;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     // Event handler for EndButtonPressed Event
+    // Play sound when click button and change to GameOver scene
     public void OnEndButtonPressed()
     {
-        Debug.Log("End Button");
-        SceneManager.LoadScene("GameOver");
+        clickSound.Play();
+        Debug.Log("End Game!");
+        StartCoroutine(LoadLevel("GameOver", 0.3f));
+    }
+
+    // Waiting for _delay seconds to load new scene
+    IEnumerator LoadLevel(string _name, float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        SceneManager.LoadScene(_name);
     }
 }
