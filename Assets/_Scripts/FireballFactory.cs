@@ -74,7 +74,10 @@ public class FireballFactory
                 break;
         }
 
-        tempFireball.transform.parent = gameController.gameObject.transform;
+        if(gameController != null)
+        {
+            tempFireball.transform.parent = gameController.gameObject.transform;
+        }       
         tempFireball.SetActive(false);
 
         return tempFireball;

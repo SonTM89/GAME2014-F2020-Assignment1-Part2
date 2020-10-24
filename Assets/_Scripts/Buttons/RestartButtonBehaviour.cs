@@ -14,6 +14,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,6 +23,14 @@ public class RestartButtonBehaviour : MonoBehaviour
     // button click sound
     public AudioSource clickSound;
 
+    // reference to score UI
+    public TextMeshProUGUI totalScore;
+
+    // Show player score on screen
+    void Start()
+    {
+        totalScore.text = ScoreManager.Instance().playerScore.ToString();
+    }
 
     // Event handler for RestartButtonPressed Event
     public void OnRestartButtonPressed()

@@ -44,7 +44,7 @@ public class FireballController : MonoBehaviour
     // Fireball will be returned to fireballPool when going off screen
     private void _CheckBounds()
     {
-        if (transform.position.y > verticalBoundary)
+        if (transform.position.y > verticalBoundary || transform.position.y < -verticalBoundary)
         {
             FireballManager.Instance().ReturnFireball(gameObject);
         }

@@ -14,7 +14,9 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -29,6 +31,13 @@ public class PlayerController : MonoBehaviour
     [Header("Bullet Firing")]
     public float fireDelay;
 
+    [Header("Score Display")]
+    public TextMeshProUGUI playerScoreDisplay;
+
+    public static float healthAmount;
+    
+
+
     private Rigidbody2D m_rigidBody; // player rigidbody 2D
 
     private Vector3 m_touchesEnded; // position of touch input
@@ -36,6 +45,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ScoreManager.Instance().playerScore = 0;
+        healthAmount = 1;
+
         m_touchesEnded = new Vector3();
         m_rigidBody = GetComponent<Rigidbody2D>(); // Get rigidbody of the player
     }
@@ -43,9 +55,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        playerScoreDisplay.text = "Score: " + ScoreManager.Instance().playerScore.ToString();
+
         _Move();
         _CheckBounds();
         _FireBullet();
+
+        if(healthAmount <= 0)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
 
     // Moving player along X-axis and within the screen boundaries
@@ -123,6 +142,8 @@ public class PlayerController : MonoBehaviour
         // delay bullet firing 
         if (Time.frameCount % 60 == 0 && FireballManager.Instance().HasFireballs())
         {
+            healthAmount -= 0.01f;
+            ScoreManager.Instance().playerScore += 1;
             FireballManager.Instance().GetFireball(transform.position);
         }
     }
