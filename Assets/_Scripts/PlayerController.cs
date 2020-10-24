@@ -1,5 +1,5 @@
 ﻿/*--------------------------------------------------------------
-// StartButtonBehaviour.cs
+// PlayerController.cs
 //
 // Control the player behaviour such as moving and firing etc.
 //
@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     {
         _Move();
         _CheckBounds();
+        _FireBullet();
     }
 
     // Moving player along X-axis and within the screen boundaries
@@ -115,5 +116,14 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(-horizontalBoundary, transform.position.y, 0.0f);
         }
 
+    }
+
+    private void _FireBullet()
+    {
+        // delay bullet firing 
+        if (Time.frameCount % 60 == 0 && FireballManager.Instance().HasFireballs())
+        {
+            FireballManager.Instance().GetFireball(transform.position);
+        }
     }
 }

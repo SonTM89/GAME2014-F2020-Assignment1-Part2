@@ -1,5 +1,5 @@
 ﻿/*--------------------------------------------------------------
-// StartButtonBehaviour.cs
+// BackgroundController.cs
 //
 // Control the background behaviour
 //
