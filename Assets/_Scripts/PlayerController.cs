@@ -35,8 +35,10 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI playerScoreDisplay;
 
     public static float healthAmount;
-    
 
+    public AudioSource shootingSound;
+    public AudioSource collectingSound;
+    public AudioSource explodingSound;
 
     private Rigidbody2D m_rigidBody; // player rigidbody 2D
 
@@ -140,9 +142,9 @@ public class PlayerController : MonoBehaviour
     private void _FireballFire()
     {
         // delay fireball firing 
-        if (Time.frameCount % 60 == 0 && FireballManager.Instance().HasFireballs())
+        if (Time.frameCount % 10 == 0 && FireballManager.Instance().HasFireballs())
         {
-            ScoreManager.Instance().playerScore += 1;
+            shootingSound.Play();
             FireballManager.Instance().GetFireball(transform.position);
         }
     }
@@ -151,13 +153,20 @@ public class PlayerController : MonoBehaviour
     // Player will be destroyed when colliding with Enemies
     private void OnTriggerEnter2D(Collider2D col)
     {
+        if(col.gameObject.tag == "Gem")
+        {
+            collectingSound.Play();
+        }
+
         if (col.gameObject.tag == "E_Fireball")
         {
+            Debug.Log(healthAmount);
             healthAmount -= FireballDamage.ENEMY_FIREBALL;
         }
 
         if (col.gameObject.tag == "Enemy" || healthAmount <= 0)
         {
+            explodingSound.Play();
             Destroy(gameObject);
             SceneManager.LoadScene("GameOver");
         }

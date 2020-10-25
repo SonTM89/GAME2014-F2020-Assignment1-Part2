@@ -125,6 +125,9 @@ MonoBehaviour:
   horizontalTValue: 0.1
   fireDelay: 0.2
   playerScoreDisplay: {fileID: 0}
+  shootingSound: {fileID: 0}
+  collectingSound: {fileID: 0}
+  explodingSound: {fileID: 0}
 --- !u!95 &1810741879
 Animator:
   serializedVersion: 3

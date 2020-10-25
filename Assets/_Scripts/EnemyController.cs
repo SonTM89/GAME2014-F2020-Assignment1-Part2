@@ -35,7 +35,7 @@ public class EnemyController : MonoBehaviour, IApplyDamage
 
     private void _Move()
     {
-        transform.position += new Vector3(horizontalSpeed * direction * Time.deltaTime, verticalSpeed * Time.deltaTime, 0.0f);
+        transform.position += new Vector3(/*horizontalSpeed * direction * Time.deltaTime*/ 0.0f, verticalSpeed * Time.deltaTime, 0.0f);
     }
 
     private void _CheckBounds()
@@ -64,7 +64,6 @@ public class EnemyController : MonoBehaviour, IApplyDamage
         // delay enemy fireball firing 
         if (Time.frameCount % 120 == 0 && FireballManager.Instance().HasEnemyFireballs())
         {
-            Debug.Log("Zo");
             FireballManager.Instance().GetEnemyFireball(transform.position);
         }
     }
@@ -73,10 +72,9 @@ public class EnemyController : MonoBehaviour, IApplyDamage
     // When enymy health amount <= 0, enemy will be destroyed and give points to player
     public void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Fireball")
+        if (col.gameObject.tag == "Fireball" && col.gameObject.transform.position.y < 5.2f)
         {
             enemyHealth -= ApplyDamage();
-            Debug.Log(enemyHealth);
             if (enemyHealth <= 0)
             {
                 ScoreManager.Instance().playerScore += ScoreManager.ENEMY_POINT;
