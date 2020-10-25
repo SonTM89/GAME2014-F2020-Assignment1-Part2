@@ -5,7 +5,7 @@
 //
 // Created by Tran Minh Son on Oct 24 2020
 // StudentID: 101137552
-// Date last Modified: Oct 24 2020
+// Date last Modified: Oct 25 2020
 // Rev: 1.1
 //  
 // Copyright © 2020 Tran Minh Son. All rights reserved.
@@ -31,4 +31,7 @@ public class ScoreManager
     }
 
     public int playerScore;
+
+    public const int ENEMY_POINT = 100;
+    public const int REWARD_POINT = 70;
 }

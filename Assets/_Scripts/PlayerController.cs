@@ -1,11 +1,11 @@
 ﻿/*--------------------------------------------------------------
 // PlayerController.cs
 //
-// Control the player behaviour such as moving and firing etc.
+// Control the player behaviour such as moving,firing, colliding etc.
 //
 // Created by Tran Minh Son on Oct 24 2020
 // StudentID: 101137552
-// Date last Modified: Oct 24 2020
+// Date last Modified: Oct 25 2020
 // Rev: 1.1
 //  
 // Copyright © 2020 Tran Minh Son. All rights reserved.
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         ScoreManager.Instance().playerScore = 0;
-        healthAmount = 1;
+        healthAmount = 100;
 
         m_touchesEnded = new Vector3();
         m_rigidBody = GetComponent<Rigidbody2D>(); // Get rigidbody of the player
@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
         _Move();
         _CheckBounds();
-        _FireBullet();
+        _FireballFire();
 
         if(healthAmount <= 0)
         {
@@ -137,14 +137,29 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void _FireBullet()
+    private void _FireballFire()
     {
-        // delay bullet firing 
+        // delay fireball firing 
         if (Time.frameCount % 60 == 0 && FireballManager.Instance().HasFireballs())
         {
-            healthAmount -= 0.01f;
             ScoreManager.Instance().playerScore += 1;
             FireballManager.Instance().GetFireball(transform.position);
+        }
+    }
+
+    // Player health will be decreased when colliding with Enemy Fireball and will be destroyed when health amount <= 0
+    // Player will be destroyed when colliding with Enemies
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "E_Fireball")
+        {
+            healthAmount -= FireballDamage.ENEMY_FIREBALL;
+        }
+
+        if (col.gameObject.tag == "Enemy" || healthAmount <= 0)
+        {
+            Destroy(gameObject);
+            SceneManager.LoadScene("GameOver");
         }
     }
 }

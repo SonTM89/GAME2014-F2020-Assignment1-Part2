@@ -53,8 +53,17 @@ public class FireballController : MonoBehaviour
     // Fireball will be returned to fireballPool when colliding with other objects
     public void OnTriggerEnter2D(Collider2D other)
     {
-        //Debug.Log(other.gameObject.name);
-        FireballManager.Instance().ReturnFireball(gameObject);
+        
+        if(gameObject.tag == "Fireball" && other.gameObject.tag == "Enemy")
+        {
+            FireballManager.Instance().ReturnFireball(gameObject);
+        }
+
+        if (gameObject.tag == "E_Fireball" && other.gameObject.tag == "Player")
+        {
+            FireballManager.Instance().ReturnEnemyFireball(gameObject);
+        }
+
     }
 
     public int ApplyDamage()
